@@ -22,11 +22,11 @@ from XTBApi.api import Client
 # FIRST INIT THE CLIENT
 client = Client()
 # THEN LOGIN
-client.login("{user_id}", "{password}", mode={demo,real})
+client.login("user_id", "password", mode="real")
 # CHECK IF MARKET IS OPEN FOR EURUSD
-client.check_if_market_open([EURUSD])
+client.check_if_market_open(['EURUSD'])
 # BUY ONE VOLUME (FOR EURUSD THAT CORRESPONDS TO 100000 units)
-client.open_trade('buy', EURUSD, 1)
+client.open_trade('buy', 'EURUSD', 1)
 # SEE IF ACTUAL GAIN IS ABOVE 100 THEN CLOSE THE TRADE
 trades = client.update_trades() # GET CURRENT TRADES
 trade_ids = [trade_id for trade_id in trades.keys()]
@@ -40,7 +40,3 @@ client.close_all_trades()
 client.logout()
 ```
 
-# Api Reference
-REQUIRED - **SOON**
-
-_Documentation still in progess_
