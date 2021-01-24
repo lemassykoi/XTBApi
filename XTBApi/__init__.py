@@ -35,8 +35,7 @@ logging.config.dictConfig({
         },
         'XTBApi': {
             'handlers': ['rotating'],
-            #'level': 'DEBUG'
-            'level': 'INFO'
+            'level': 'DEBUG'
         }
     }
 })
