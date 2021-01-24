@@ -30,7 +30,7 @@ logging.config.dictConfig({
     'loggers': {
         '': {
             'handlers': ['console'],
-            'level': 'DEBUG',
+            'level': 'CRITICAL',
             'propagate': True
         },
         'XTBApi': {
