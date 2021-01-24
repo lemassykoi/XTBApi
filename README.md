@@ -9,7 +9,8 @@ A python based API for XTB trading using _websocket_client_.
 To install the API, just clone the repository.
 
 ```bash
-git clone git@github.com:federico123579/XTBApi.git
+apt update;apt install git -y
+git clone https://github.com/lemassykoi/XTBApi.git
 cd XTBApi/
 python3 -m venv env
 . env/bin/activate
