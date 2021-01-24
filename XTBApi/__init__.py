@@ -8,7 +8,7 @@ logging.config.dictConfig({
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
-        'deafult': {
+        'default': {
             'format':
                 '%(asctime)s - %(levelname)s - %(name)s - %(message)s',
             'datefmt': '%Y-%m-%d %H:%M:%S'
@@ -17,11 +17,11 @@ logging.config.dictConfig({
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
-            'formatter': 'deafult', ## this is NOT a typo
+            'formatter': 'default',
         },
         'rotating': {
             'class': 'logging.handlers.TimedRotatingFileHandler',
-            'formatter': 'deafult',
+            'formatter': 'default',
             'filename': os.path.join(os.path.dirname(__file__), 'logs/' + str(date.today()) + '.log'),
             'when': 'midnight',
             'backupCount': 3
