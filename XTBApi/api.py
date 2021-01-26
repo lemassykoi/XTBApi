@@ -365,7 +365,7 @@ class BaseClient(object):
 class Transaction(object):
     def __init__(self, trans_dict):
         self._trans_dict = trans_dict
-        self.mode = {0: 'buy', 1: 'sell', 2: 'wait'}[trans_dict['cmd']]
+        self.mode = {0: 'buy', 1: 'sell', 2: 'buy_limit', 3: 'sell_limit'}[trans_dict['cmd']]
         self.order_id = trans_dict['order']
         self.symbol = trans_dict['symbol']
         self.volume = trans_dict['volume']
