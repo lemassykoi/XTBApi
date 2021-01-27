@@ -25,6 +25,8 @@ REQUIRED = [
     'websocket_client'
     'requests'
     'pandas'
+    'wheel'
+    'TA-Lib'
 ]
 
 # What packages are optional?
