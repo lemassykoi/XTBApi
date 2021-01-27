@@ -292,15 +292,13 @@ def crossesUnder(stream1, stream2):
 # This function places a market order in the direction BuySell, "B" = Buy, "S" = Sell, uses symbol, amount, stop, limit
 def enter(BuySell, stop, limit):
     volume = amount
-    direction = True;
-    mode = 0
+    order = 'buy'
     if BuySell == "S":
-        direction = False;
-        mode = 1
+        order = 'sell'
     try:
-        #opentrade = con.open_trade(symbol=symbol, is_buy=direction, amount=amount, time_in_force='GTC', order_type='AtMarket', is_in_pips=False, limit=limit, stop=stop)
-        print('')
-        # opentrade = client.open_trade(mode, symbol, volume)
+        msg = '   Opening tradeID for symbol ' + symbol
+        NotifyLogInfo(msg)
+        opentrade = client.open_trade(order, symbol, amount)
     except:
         msg = '   Error Opening Trade.'
         NotifyLogError(msg)
