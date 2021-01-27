@@ -307,24 +307,24 @@ def enter(BuySell, stop, limit):
         LOGGER.info(msg)
 
 # This function closes all positions that are in the direction BuySell, "B" = Close All Buy Positions, "S" = Close All Sell Positions, uses symbol
-# def exit(BuySell=None):
-    # openpositions = con.get_open_positions(kind='list')
-    # isbuy = True
-    # if BuySell == "S":
-        # isbuy = False
-    # for position in openpositions:
-        # if position['currency'] == symbol:
-            # if BuySell is None or position['isBuy'] == isbuy:
-                # msg = '   Closing tradeID : ' + trade_order
-                # NotifyLogInfo(msg)
-                # try:
-                    # closetrade = con.close_trade(trade_id=position['tradeId'], amount=position['amountK'])
-                # except:
-                    # msg = "   Error Closing Trade."
-                    # NotifyLogError(msg)
-                # else:
-                    # msg = "   Trade Closed Successfully."
-                    # LOGGER.info(msg)
+def exit(BuySell=None):
+    openpositions = client.get_trades()
+    isbuy = 0
+    if BuySell == "S":
+        isbuy = 1
+    for position in openpositions:
+        if position['symbol'] == symbol:
+            if BuySell is None or position['cmd'] == isbuy:
+                msg = '   Closing tradeID : ' + str(position['order'])
+                NotifyLogInfo(msg)
+                try:
+                    closetrade = client.close_trade(position['order'])
+                except:
+                    msg = "   Error Closing Trade."
+                    NotifyLogError(msg)
+                else:
+                    msg = "   Trade Closed Successfully."
+                    LOGGER.info(msg)
 
 # Returns number of Open Positions for symbol in the direction BuySell, returns total number of both Buy and Sell positions if no direction is specified
 def countOpenTrades(BuySell=None):
