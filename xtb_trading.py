@@ -335,7 +335,7 @@ def countOpenTrades(BuySell=None):
     isbuy = 0
     if BuySell == "S":
         isbuy = 1
-    for keys in trades:
+    for keys in openpositions:
         if keys['symbol'] == symbol:
             if BuySell is None or keys['cmd'] == isbuy:
                 counter+=1
