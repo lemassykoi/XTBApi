@@ -17,7 +17,7 @@ python3 -m venv env
 pip install .
 ```
 
-Then you can use XTBApi like this simple tutorial.
+Then you can use XTBApi like this simple tutorial, or use `xtb_trading.py` as an example.
 ```python
 from XTBApi.api import Client
 # FIRST INIT THE CLIENT
