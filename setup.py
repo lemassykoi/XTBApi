@@ -26,6 +26,7 @@ REQUIRED = [
     'requests',
     'pandas',
     'websocket_client',
+    'pyti',
     'TA-Lib'
 ]
 
