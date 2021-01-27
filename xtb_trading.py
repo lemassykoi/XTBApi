@@ -396,14 +396,13 @@ def Update():
         openpositions = client.get_trades()
         for position in openpositions:
             if position['symbol'] == symbol:
-                NotifyLogInfo("Changing Limit for tradeID: " + position['order'])
+                NotifyLogInfo("Changing Limit for tradeID: " + str(position['order']))
                 try:
                     NotifyLogInfo('client.trade_transaction')
-                    client.trade_transaction(symbol, position['cmd'], trans_type, volume, stop_loss=0, take_profit=0)
+                    #client.trade_transaction(symbol, position['cmd'], trans_type, volume, stop_loss=0, take_profit=0)
                 except:
                     NotifyLogError("       Error Changing Limit :(")
                 else:
-                    #Notify("       Limit Changed Successfully. ;)")
                     print("       Limit Changed Successfully. ;)")
 
     # # Entry Logic
