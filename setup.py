@@ -22,10 +22,10 @@ VERSION = None
 
 # What packages are required for this module to be executed?
 REQUIRED = [
-    'websocket_client'
-    'requests'
-    'pandas'
-    'wheel'
+    'websocket_client',
+    'requests',
+    'pandas',
+    'wheel',
     'TA-Lib'
 ]
 
