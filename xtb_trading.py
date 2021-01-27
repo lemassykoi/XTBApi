@@ -395,7 +395,7 @@ def Update():
     if countOpenTrades()>0:
         openpositions = client.get_trades()
         for position in openpositions:
-            if position['symbol'] == symbol:
+            if position['symbol'] == symbol and ((position['cmd'] == 0) or (position['cmd'] == 1)):
                 NotifyLogInfo("Changing Limit for tradeID: " + str(position['order']))
                 try:
                     NotifyLogInfo('client.trade_transaction')
