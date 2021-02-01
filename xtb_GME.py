@@ -209,6 +209,8 @@ def main():
             LOGGER.error("EXCEPTION Check Marjet on Bot XTB " + symbol + " ! Bot Stopped.")
             handle_exception()
 
+    NotifyLogInfo('  ==MARKET OPEN !==')
+
     while True:
         try:
             Routine()
