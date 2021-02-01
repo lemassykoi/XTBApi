@@ -167,12 +167,12 @@ def Routine():
             min_price_to_sell = trade_open_price + roll_fees
             diff_sell_price = trade_close_price - min_price_to_sell
             total_local_fiat = trade_nominal_value + trade_profit
-            print('===================================================================================')
-            print(' Open Price   : ', trade_open_price)
-            print(' + Roll Fees  : ', min_price_to_sell)
-            
+
             ## BUY Order
             if keys['cmd'] == 0:
+                print('===================================================================================')
+                print(' Open Price   : ', trade_open_price)
+                print(' + Roll Fees  : ', min_price_to_sell)                
                 diff_percent_sell = diff_sell_price / trade_open_price * 100
                 print(' Close Price  : ', trade_close_price)
                 print(' Difference % : ', round(diff_percent_sell, 2), '%')
