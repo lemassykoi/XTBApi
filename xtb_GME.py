@@ -108,10 +108,10 @@ symbol = 'GME.US_9'
 # NOKIA.FI_9
 # BB.US
 # TSLA.US_9
-xtb_login = '1234567'
-xtb_pass  = '***************'
-TG_chat_id='123456789'
-TG_token='1234567890:***********************************'
+xtb_login  = '1234567'
+xtb_pass   = '***************'
+TG_chat_id = '123456789'
+TG_token   = '1234567890:***********************************'
 ##
 min_objectif_amount_sell = 69420
 ##
