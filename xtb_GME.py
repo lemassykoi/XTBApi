@@ -111,6 +111,13 @@ TG_token   = '1234567890:***********************************'
 ##
 min_objectif_amount_sell = 69420
 ##
+global last_price
+global last_trade_close_price
+global loop_last_price
+last_trade_close_price = None
+last_price = None
+loop_last_price = None
+##
 
 ## INIT XTB CONNEXION
 NotifyLogInfo('Starting XTB GME WSB')
@@ -131,45 +138,63 @@ def Routine():
     openpositions = client.get_trades()
     i = 0
     j = 0
+    k = 0
     for keys in openpositions:
         i = i + 1
+        ## ORDER is for wanted symbol
         if keys['symbol'] == symbol:
             j = j + 1
-            trade_close_price       = keys['close_price']
-            trade_close_time        = keys['close_time']
-            trade_close_timeString  = keys['close_timeString']
-            trade_closed            = keys['closed']
-            trade_commission        = keys['commission']
-            trade_digits            = keys['digits']
-            trade_open_price        = keys['open_price']
-            trade_open_time         = keys['open_time']
-            trade_open_timeString   = keys['open_timeString']
-            trade_order             = keys['order']
-            trade_profit            = keys['profit']
-            trade_nominal_value     = keys['nominalValue']
-            trade_stoploss          = keys['sl']
-            trade_spread            = keys['spread']
-            trade_storage           = keys['storage']
-            trade_traded_symbol     = keys['symbol']
-            trade_taxes             = keys['taxes']
-            trade_timestamp         = keys['timestamp']
-            trade_takeprofit        = keys['tp']
-            trade_volume            = keys['volume']
-            ## calculs
-            str_roll_fees = str(trade_storage).translate({ord(i):None for i in '-'})
-            roll_fees = float(str_roll_fees)
-            net_profit = trade_profit - roll_fees
-            min_price_to_sell = trade_open_price + roll_fees
-            diff_sell_price = trade_close_price - min_price_to_sell
-            total_local_fiat = trade_nominal_value + trade_profit
-
             ## BUY Order
             if keys['cmd'] == 0:
-                print('===================================================================================')
-                print(' Open Price   : ', trade_open_price)
-                print(' + Roll Fees  : ', min_price_to_sell)
+                k = k + 1
+                global last_price
+                global last_trade_close_price
+                global loop_last_price
+                trade_close_price       = keys['close_price']
+                trade_close_time        = keys['close_time']
+                trade_close_timeString  = keys['close_timeString']
+                trade_closed            = keys['closed']
+                trade_commission        = keys['commission']
+                trade_digits            = keys['digits']
+                trade_open_price        = keys['open_price']
+                trade_open_time         = keys['open_time']
+                trade_open_timeString   = keys['open_timeString']
+                trade_order             = keys['order']
+                trade_profit            = keys['profit']
+                trade_nominal_value     = keys['nominalValue']
+                trade_stoploss          = keys['sl']
+                trade_spread            = keys['spread']
+                trade_storage           = keys['storage']
+                trade_traded_symbol     = keys['symbol']
+                trade_taxes             = keys['taxes']
+                trade_timestamp         = keys['timestamp']
+                trade_takeprofit        = keys['tp']
+                trade_volume            = keys['volume']
+                ## calculs
+                str_roll_fees = str(trade_storage).translate({ord(i):None for i in '-'})
+                roll_fees = float(str_roll_fees)
+                net_profit = trade_profit - roll_fees
+                min_price_to_sell = trade_open_price + roll_fees
+                diff_sell_price = trade_close_price - min_price_to_sell
+                total_local_fiat = trade_nominal_value + trade_profit
                 diff_percent_sell = diff_sell_price / trade_open_price * 100
-                print(' Close Price  : ', trade_close_price)
+
+                print('===================================================================================')
+                if trade_open_price >= trade_close_price:
+                    print(f" Open Price   : {bcolors.FAIL}", trade_open_price, f"{bcolors.ENDC}")
+                else:
+                    print(f" Open Price   : {bcolors.OKGREEN}", trade_open_price, f"{bcolors.ENDC}")
+                #print(' + Roll Fees  : ', min_price_to_sell)
+                
+                if last_price is not None:
+                    if trade_close_price < last_price:
+                        print(f" Close Price  : {bcolors.FAIL}", trade_close_price, f"{bcolors.ENDC}")
+                    elif trade_close_price > last_price:
+                        print(f" Close Price  : {bcolors.OKGREEN}", trade_close_price, f"{bcolors.ENDC}")
+                    else:
+                        print(f" Close Price  : {bcolors.BOLD}", trade_close_price, f"{bcolors.ENDC}")
+                else:
+                    print(f" Close Price  : {bcolors.BOLD}", trade_close_price, f"{bcolors.ENDC}")
                 print('')
                 print(' Difference % : ', round(diff_percent_sell, 2), '%')
                 print(' Difference $ : $', round(diff_sell_price, 2))
@@ -189,11 +214,13 @@ def Routine():
                 if total_local_fiat >= min_objectif_amount_sell:
                     NotifyLogInfo(' $GME is ready !!')
                     limit = min_objectif_amount_sell * 1.29
-                    ## update or close trade
-                    client.trade_transaction(symbol, trade_order, 0, trade_volume, stop_loss=min_objectif_amount_sell, take_profit=limit)   ## not tested
+                    ## close trade
+                    client.trade_transaction(symbol, trade_order, 0, trade_volume, stop_loss=min_objectif_amount_sell, take_profit=limit)
                     #client.close_trade(trade_order)
                     #client.close_trade([trade_order])
-        print('')
+                last_trade_close_price = trade_close_price
+        loop_last_price = last_trade_close_price
+    last_price = loop_last_price
 
 def handle_exception():
     NotifyLogError("Exception handled on " + symbol + " ! Restarting...")
