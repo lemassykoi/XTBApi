@@ -111,7 +111,6 @@ TG_token   = '1234567890:***********************************'
 ##
 min_objectif_amount_sell = 69420
 ##
-version = '20210201-0448'
 
 ## INIT XTB CONNEXION
 NotifyLogInfo('Starting XTB GME WSB')
