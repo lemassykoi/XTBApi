@@ -172,20 +172,30 @@ def Routine():
             if keys['cmd'] == 0:
                 print('===================================================================================')
                 print(' Open Price   : ', trade_open_price)
-                print(' + Roll Fees  : ', min_price_to_sell)                
+                print(' + Roll Fees  : ', min_price_to_sell)
                 diff_percent_sell = diff_sell_price / trade_open_price * 100
                 print(' Close Price  : ', trade_close_price)
-                print(' Difference % : ', round(diff_percent_sell, 2), '%')
-                print(' Difference $ : $', diff_sell_price)
-                print(' Net Profit   : €', trade_profit)
                 print('')
-                print(' Total Fiat   : €', total_local_fiat)
+                print(' Difference % : ', round(diff_percent_sell, 2), '%')
+                print(' Difference $ : $', round(diff_sell_price, 2))
+                print('')
+                if trade_profit >= 100:
+                    print(f" Net Profit   : €{bcolors.OKGREEN}", trade_profit, f"{bcolors.ENDC}")
+                elif trade_profit < 0:
+                    print(f" Net Profit   : €{bcolors.FAIL}", trade_profit, f"{bcolors.ENDC}")
+                else:
+                    print(f" Net Profit   : €{bcolors.BOLD}", trade_profit, f"{bcolors.ENDC}")
+                
+                if total_local_fiat < trade_nominal_value:
+                    print(f" Total Fiat   : €{bcolors.FAIL}", round(total_local_fiat, 2), f"{bcolors.ENDC}")
+                else:
+                    print(' Total Fiat   : €', round(total_local_fiat, 2))
                 ## check if profit OK
                 if total_local_fiat >= min_objectif_amount_sell:
-                    print(' Objectif atteint !!')
-                    limit = min_objectif_amount_sell * 1.3
-                    ## close trade
-                    #client.trade_transaction(symbol, trade_order, 0, trade_volume, stop_loss=min_objectif_amount_sell, take_profit=limit)
+                    NotifyLogInfo(' $GME is ready !!')
+                    limit = min_objectif_amount_sell * 1.29
+                    ## update or close trade
+                    client.trade_transaction(symbol, trade_order, 0, trade_volume, stop_loss=min_objectif_amount_sell, take_profit=limit)   ## not tested
                     #client.close_trade(trade_order)
                     #client.close_trade([trade_order])
         print('')
