@@ -194,7 +194,7 @@ def Routine():
                     else:
                         print(f" Close Price  : {bcolors.BOLD}", trade_close_price, f"{bcolors.ENDC}")
                 else:
-                    print(f" Close Price  : {bcolors.BOLD}", trade_close_price, f"{bcolors.ENDC}")
+                    print(f" Close Price  : {bcolors.HEADER}", trade_close_price, f"{bcolors.ENDC}")
                 print('')
                 print(' Difference % : ', round(diff_percent_sell, 2), '%')
                 print(' Difference $ : $', round(diff_sell_price, 2))
