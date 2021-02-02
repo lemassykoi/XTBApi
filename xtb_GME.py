@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 # adaptation du script XTB pour #WSB $GME
 ##
-debug = 1               ## DEBUG ENABLED OR DISABLED
-
 from XTBApi.api import *
 import time
 import datetime as dt
@@ -98,8 +96,6 @@ def NormalExit():
     client.logout()
     LOGGER.info('Logged Out : Script Exited Normally')
     sys.exit()
-
-if debug == 1: print(f"{bcolors.WARNING}  DEBUG IS ON{bcolors.ENDC}")
 
 ## LOGGER LEVEL 
 LOGGER.setLevel(logging.INFO)
