@@ -342,8 +342,7 @@ class BaseClient(object):
         info.update(kwargs)  # update with kwargs parameters
         data = _get_data("tradeTransaction", tradeTransInfo=info)
         name_of_mode = [x.name for x in MODES if x.value == mode][0]
-        name_of_type = [x.name for x in TRANS_TYPES if x.value ==
-                        trans_type][0]
+        name_of_type = [x.name for x in TRANS_TYPES if x.value == trans_type][0]
         self.LOGGER.info(f"CMD: trade transaction of {symbol} of mode "
                          f"{name_of_mode} with type {name_of_type} of "
                          f"{volume}...")
@@ -390,8 +389,7 @@ class Client(BaseClient):
         response = self.get_trading_hours(list_of_symbols)
         market_values = {}
         for symbol in response:
-            today_values = [day for day in symbol['trading'] if day['day'] ==
-                _td.isoweekday()][0]
+            today_values = [day for day in symbol['trading'] if day['day'] == _td.isoweekday()][0]
             if today_values['fromT'] <= actual_tmsp <= today_values['toT']:
                 market_values[symbol['symbol']] = True
             else:
