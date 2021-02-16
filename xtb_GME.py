@@ -213,11 +213,8 @@ def Routine():
                 ## check if profit OK
                 if total_local_fiat >= min_objectif_amount_sell:
                     NotifyLogInfo(' $GME is ready !!')
-                    limit = min_objectif_amount_sell * 1.29
                     ## close trade
-                    client.trade_transaction(symbol, trade_order, 0, trade_volume, stop_loss=min_objectif_amount_sell, take_profit=limit)
-                    #client.close_trade(trade_order)
-                    #client.close_trade([trade_order])
+                    client.close_trade(trade_order)
                 last_trade_close_price = trade_close_price
         loop_last_price = last_trade_close_price
     last_price = loop_last_price
